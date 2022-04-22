@@ -1,5 +1,3 @@
-// import path from "path";
-
 // 解决commonjs模块转为es6 模块
 import commonjs from '@rollup/plugin-commonjs';
 
@@ -30,6 +28,9 @@ import replace from '@rollup/plugin-replace';
 // eslint
 import eslint from '@rollup/plugin-eslint';
 
+//  ts 配置
+import typescript from '@rollup/plugin-typescript';
+
 // 获取环境;
 const NODE_ENV = process.env.NODE_ENV;
 
@@ -38,35 +39,46 @@ const isProd = function () {
     return NODE_ENV === 'production';
 };
 
+// const resolveFile = function (filePath) {
+//     return path.join(__dirname, "..", filePath);
+// };
+
+const devPlugin = () => {
+    if (isProd()) return [];
+
+    // 开发环境所需插件
+    return [
+        livereload({
+            watch: ['src'],
+        }),
+        serve({
+            open: true,
+            contentBase: '',
+            openPage: '/public/index.html',
+        }),
+    ];
+};
+
 const plugins = [
     json(),
     resolve(),
     commonjs(),
     prettier(),
     eslint(),
+    typescript({ tsconfig: './tsconfig.json' }),
     replace({
         'process.env.NODE_ENV': NODE_ENV,
         preventAssignment: true,
     }),
-    isProd() && terser({ compress: { drop_console: true } }),
+    // isProd() && terser({ compress: { drop_console: true } }),
 
-    !isProd() &&
-        livereload({
-            watch: ['src'],
-        }),
-
-    !isProd() &&
-        serve({
-            open: true,
-            contentBase: '',
-            openPage: '/public/index.html',
-        }),
+    ...devPlugin(),
 ];
 
 export default {
     input: {
-        main: './src/main.js',
-        test: './src/test.js',
+        main: './src/main.ts',
+        test: './src/test.ts',
     },
     output: [
         {
