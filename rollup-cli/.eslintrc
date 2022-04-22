@@ -1,0 +1,19 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true,
+        "node": true
+    },
+    "parser": "@babel/eslint-parser",
+    "parserOptions": {
+        "sourceType": "module",
+        "ecmaVersion": 2015
+    },
+    "extends": ["eslint:recommended"],
+    "rules": {
+        "quotes": ["error", "single"], //
+        "semi-spacing": "error",
+        "semi": ["error", "always"],
+        "indent": ["error", 4]
+    }
+}

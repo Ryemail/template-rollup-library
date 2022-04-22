@@ -1,0 +1,43 @@
+{
+    "name": "rollup-library",
+    "version": "1.0.0",
+    "license": "MIT",
+    "main": "lib/index.js",
+    "module": "es/index.js",
+    "unpkg": "dist/index.js",
+    "devDependencies": {
+        "@babel/core": "^7.17.9",
+        "@babel/eslint-parser": "^7.17.0",
+        "@babel/plugin-transform-runtime": "^7.17.0",
+        "@babel/preset-env": "^7.16.11",
+        "@rollup/plugin-babel": "^5.3.1",
+        "@rollup/plugin-commonjs": "^21.0.3",
+        "@rollup/plugin-eslint": "^8.0.2",
+        "@rollup/plugin-json": "^4.1.0",
+        "@rollup/plugin-node-resolve": "^13.2.0",
+        "@rollup/plugin-replace": "^4.0.0",
+        "cross-env": "^7.0.3",
+        "eslint": "^8.13.0",
+        "postcss": "^8.4.12",
+        "prettier": "^2.6.2",
+        "rimraf": "^3.0.2",
+        "rollup": "^2.70.1",
+        "rollup-plugin-livereload": "^2.0.5",
+        "rollup-plugin-postcss": "^4.0.2",
+        "rollup-plugin-prettier": "^2.2.2",
+        "rollup-plugin-serve": "^1.1.0",
+        "rollup-plugin-terser": "^7.0.2"
+    },
+    "scripts": {
+        "dev": "cross-env NODE_ENV=development rollup --config --watch",
+        "build": "yarn build:clean && cross-env NODE_ENV=production rollup --config && yarn build:umd",
+        "build:umd": "cross-env NODE_ENV=umd rollup --config ./build/rollup.config.umd.js",
+        "build:clean": "rimraf ./dist && rimraf ./es && rimraf ./lib"
+    },
+    "files": [
+        "dist",
+        "lib",
+        "es"
+    ],
+    "dependencies": {}
+}
